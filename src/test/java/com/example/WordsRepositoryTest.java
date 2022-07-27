@@ -18,86 +18,86 @@ public class WordsRepositoryTest {
     }
 
     @Test
-    public void testGetWordsFromPinyinIfNone() {
+    public void shouldReturnEmptyIfPinyinIsNotExist() {
         List<String> result = WordsRepository.getWordsFromPinyin("noword");
         assertTrue(result.isEmpty());
     }
 
     @Test
-    public void testGetWordsFromJianpinReturnOne() {
+    public void shouldReturnOneWordIfJianPinIsExist() {
         List<String> result = WordsRepository.getWordsFromPinyin("hwjs");
         List<String> expected = Arrays.asList("华为技术");
         assertThat(result, is(expected));
     }
 
     @Test
-    public void testGetWordsFromQuanpinReturnOne() {
+    public void shouldReturnOneWordIfQuanPinIsExist1() {
         List<String> result = WordsRepository.getWordsFromPinyin("huaweijishu");
         List<String> expected = Arrays.asList("华为技术");
         assertThat(result, is(expected));
     }
 
     @Test
-    public void testGetWordsFromQuanpinReturnOneAnother() {
+    public void shouldReturnOneWordIfQuanPinIsExist2() {
         List<String> result = WordsRepository.getWordsFromPinyin("chunfeng");
         List<String> expected = Arrays.asList("春风");
         assertThat(result, is(expected));
     }
 
     @Test
-    public void testGetWordsFromJianpinReturnMany() {
+    public void shouldReturnMultiWordsIfJianPinIsExist1() {
         List<String> result = WordsRepository.getWordsFromPinyin("cf");
         List<String> expected = Arrays.asList("采访", "财富", "厨房", "春风", "赤峰");
         assertThat(result, is(expected));
     }
 
     @Test
-    public void testGetWordsFromQuanpinReturnMany() {
+    public void shouldReturnMultiWordsIfJianPinIsExist2() {
         List<String> result = WordsRepository.getWordsFromPinyin("gaoxiao");
         List<String> expected = Arrays.asList("高校", "高效", "高小");
         assertThat(result, is(expected));
     }
 
-
     @Test
-    public void testAddUseCount() {
-        ZhWord zhWord = WordsRepository.getZhWordByName("厨房");
-        assertThat(zhWord.getCount(), is(0));
-        WordsRepository.addUseCount("厨房");
-        assertThat(zhWord.getCount(), is(1));
-        WordsRepository.addUseCount("厨房");
-        assertThat(zhWord.getCount(), is(2));
+    public void shouldEnabledUsageCount() {
+        ZhWord zhWword = WordsRepository.getZhWordByName("厨房");
+        assertThat(zhWword.getCount(), is(0));
+        WordsRepository.addUsageCount("厨房");
+        assertThat(zhWword.getCount(), is(1));
+        WordsRepository.addUsageCount("厨房");
+        assertThat(zhWword.getCount(), is(2));
     }
 
     @Test
-    public void testGetWordsFromJianpinReturnManyForSort() {
-        WordsRepository.addUseCount("厨房");
-        WordsRepository.addUseCount("厨房");
-        WordsRepository.addUseCount("厨房");
-        WordsRepository.addUseCount("春风");
-        WordsRepository.addUseCount("春风");
-        WordsRepository.addUseCount("财富");
+    public void shouldReturnSortedMultiWordsIfJianpinIsExist() {
+        WordsRepository.addUsageCount("厨房");
+        WordsRepository.addUsageCount("厨房");
+        WordsRepository.addUsageCount("厨房");
+        WordsRepository.addUsageCount("春风");
+        WordsRepository.addUsageCount("春风");
+        WordsRepository.addUsageCount("财富");
         List<String> result = WordsRepository.getWordsFromPinyin("cf");
         List<String> expected = Arrays.asList("厨房", "春风", "财富", "采访", "赤峰");
         assertThat(result, is(expected));
     }
 
     @Test
-    public void testAddNewZhWord() {
+    public void shouldEnabledAddNewZhWord() {
         ZhWord zhWordNew = new ZhWord("祖国", "zg", "zuguo");
         WordsRepository.addZhWord(zhWordNew);
         ZhWord zhWordExpected = WordsRepository.getZhWordByName("祖国");
         assertThat(zhWordExpected, sameInstance(zhWordNew));
     }
 
+
     @Test
-    public void testAddNewZhWordToOverride() {
+    public void shouldOverrideOldZhWordByAdd() {
         ZhWord zhWordNew = new ZhWord("南宁", "nn", "nanning");
-        ZhWord zhWordExist = WordsRepository.getZhWordByName("南宁");
-        assertThat(zhWordExist, not(sameInstance(zhWordNew)));
+        ZhWord zhWordOld = WordsRepository.getZhWordByName("南宁");
+        assertThat(zhWordOld, not(sameInstance(zhWordNew)));
         WordsRepository.addZhWord(zhWordNew);
-        ZhWord zhWordExistNew = WordsRepository.getZhWordByName("南宁");
-        assertThat(zhWordExistNew, sameInstance(zhWordNew));
+        ZhWord zhWordModified = WordsRepository.getZhWordByName("南宁");
+        assertThat(zhWordModified, sameInstance(zhWordNew));
     }
 
 }

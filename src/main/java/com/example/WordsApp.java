@@ -47,7 +47,7 @@ public class WordsApp {
                 if (choice <= words.size() && choice > 0) {
                     String selectedWord = words.get(choice - 1);
                     System.out.println(selectedWord);
-                    WordsRepository.addUseCount(selectedWord);
+                    WordsRepository.addUsageCount(selectedWord);
                 }
             } else {
                 System.out.println("no word!!!");

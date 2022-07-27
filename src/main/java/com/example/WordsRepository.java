@@ -73,9 +73,8 @@ public class WordsRepository {
     }
 
 
-    public static void addUseCount(String name) {
-        ZhWord zhWord = getZhWordByName(name);
-        zhWord.addCount();
+    public static void addUsageCount(String name) {
+        getZhWordByName(name).addCount();
     }
 
     public static void clearCount() {
