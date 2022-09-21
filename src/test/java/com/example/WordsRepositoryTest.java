@@ -45,14 +45,14 @@ public class WordsRepositoryTest {
     }
 
     @Test
-    public void shouldReturnMultiWordsIfJianPinIsExist1() {
+    public void shouldReturnMultiWordsIfJianPinIsExist() {
         List<String> result = WordsRepository.getWordsFromPinyin("cf");
         List<String> expected = Arrays.asList("采访", "财富", "厨房", "春风", "赤峰");
         assertThat(result, is(expected));
     }
 
     @Test
-    public void shouldReturnMultiWordsIfJianPinIsExist2() {
+    public void shouldReturnMultiWordsIfQuanPinIsExist() {
         List<String> result = WordsRepository.getWordsFromPinyin("gaoxiao");
         List<String> expected = Arrays.asList("高校", "高效", "高小");
         assertThat(result, is(expected));
